@@ -1,0 +1,49 @@
+- error = @challenge.errors.key?(:title) && @challenge.errors[:title].count > 0
+%fieldset.control-group{:class => error ? 'has-error' : ''}
+  =f.label :title, :class => 'control-label'
+  .controls
+    ~f.text_area :title, :class => 'form-control input-large input-with-feedback', :autofocus => true
+    %span.help-inline=error ? f.error_message_on(:title, :class => 'text-error') : pat(:example)
+- error = @challenge.errors.key?(:body) && @challenge.errors[:body].count > 0
+%fieldset.control-group{:class => error ? 'has-error' : ''}
+  =f.label :body, :class => 'control-label'
+  .controls
+    ~f.text_area :body, :class => 'form-control input-large input-with-feedback'
+    %span.help-inline=error ? f.error_message_on(:body, :class => 'text-error') : pat(:example)
+- error = @challenge.errors.key?(:link) && @challenge.errors[:link].count > 0
+%fieldset.control-group{:class => error ? 'has-error' : ''}
+  =f.label :link, :class => 'control-label'
+  .controls
+    ~f.text_area :link, :class => 'form-control input-large input-with-feedback'
+    %span.help-inline=error ? f.error_message_on(:link, :class => 'text-error') : pat(:example)
+- error = @challenge.errors.key?(:category) && @challenge.errors[:category].count > 0
+%fieldset.control-group{:class => error ? 'has-error' : ''}
+  =f.label :category, :class => 'control-label'
+  .controls
+    ~f.text_area :category, :class => 'form-control input-large input-with-feedback'
+    %span.help-inline=error ? f.error_message_on(:category, :class => 'text-error') : pat(:example)
+- error = @challenge.errors.key?(:points) && @challenge.errors[:points].count > 0
+%fieldset.control-group{:class => error ? 'has-error' : ''}
+  =f.label :points, :class => 'control-label'
+  .controls
+    =f.text_field :points, :class => 'form-control input-large input-with-feedback'
+    %span.help-inline=error ? f.error_message_on(:points, :class => 'text-error') : pat(:example)
+- error = @challenge.errors.key?(:flag) && @challenge.errors[:flag].count > 0
+%fieldset.control-group{:class => error ? 'has-error' : ''}
+  =f.label :flag, :class => 'control-label'
+  .controls
+    ~f.text_area :flag, :class => 'form-control input-large input-with-feedback'
+    %span.help-inline=error ? f.error_message_on(:flag, :class => 'text-error') : pat(:example)
+- error = @challenge.errors.key?(:visible) && @challenge.errors[:visible].count > 0
+%fieldset.control-group{:class => error ? 'has-error' : ''}
+  =f.label :visible, :class => 'control-label'
+  .controls
+    =f.check_box :visible, :class => 'form-control input-large input-with-feedback'
+    %span.help-inline=error ? f.error_message_on(:visible, :class => 'text-error') : pat(:example)
+
+.form-actions
+  =f.submit pat(:save), :class => 'btn btn-primary'
+  &nbsp;
+  =f.submit pat(:save_and_continue), :class => 'btn btn-info', :name => 'save_and_continue'
+  &nbsp;
+  =link_to pat(:cancel), url(:challenges, :index), :class => 'btn btn-default'

@@ -1,0 +1,54 @@
+<% if flash[:notice] %>
+    <div id='flash' class='notice'>
+    <a class="close" data-dismiss="alert">&#215;</a>
+    <%= flash[:notice] %>
+</div>
+<% end %>
+<div class="well">
+    <form id="signup" class="form-horizontal" method="post" action="/register">
+        <legend>Register</legend>
+        <div class="control-group">
+            <label class="control-label">Team Name</label>
+            <div class="controls">
+                <div class="input-prepend">
+                    <span class="add-on"><i class="icon-user"></i></span>
+                    <input type="text" class="input-xlarge" id="login" name="login" placeholder="Team Name">
+                </div>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">Email</label>
+            <div class="controls">
+                <div class="input-prepend">
+                    <span class="add-on"><i class="icon-envelope"></i></span>
+                    <input type="text" class="input-xlarge" id="email" name="email" placeholder="Email">
+                </div>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">Password</label>
+            <div class="controls">
+                <div class="input-prepend">
+                    <span class="add-on"><i class="icon-lock"></i></span>
+                    <input type="Password" id="password" class="input-xlarge" name="password" placeholder="Password">
+                </div>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">Confirm Password</label>
+            <div class="controls">
+                <div class="input-prepend">
+                    <span class="add-on"><i class="icon-lock"></i></span>
+                    <input type="Password" id="cpassword" class="input-xlarge" name="cpassword" placeholder="Re-enter Password">
+                </div>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label"></label>
+            <div class="controls">
+                <button type="submit" class="btn btn-success" >Create My Account</button>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,22 @@
+<table class="table table-hover">
+    <tr>
+        <th>Place</th>
+        <th>Team</th>
+        <th>Points</th>
+    </tr>
+    <% ii = 1 %>
+    <% @scoreboard.each do |team| %>
+    <% if team[1].to_i == 0 %>
+    <% break %>
+    <% end %>
+        <tr>
+            <td><%= ii  %></td>
+            <td><a href='scores/<%=Base64.encode64(team[0])%>'><%=HTMLEntities.new.encode(team[0])%></a></td>
+            <td><%= team[1] %></td>
+        </tr>
+        <% ii = ii+1 %>
+    <% end %>
+
+</table>   
+<br/>
+<a href='/scores'>All Scores</a>

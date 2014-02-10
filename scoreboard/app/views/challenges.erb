@@ -1,0 +1,33 @@
+<% if flash[:notice] %>
+    <div id='flash' class='notice'>
+    <a class="close" data-dismiss="alert">&#215;</a>
+    <%=flash[:notice]%>
+</div>
+<% end %>
+<div class="row">
+    <% @ch.each do |chall| %>
+        <% if chall.visible  %>
+        <div class="span4">
+        <h3>
+            <%= chall.title %>
+        </h3>
+        <h5>
+            <%=  chall.category + " : " + chall.points.to_s  %>
+        </h5>
+        <p>
+        <%= chall.body %>
+        </p>
+        <p>
+        <%= chall.link %>
+        </p>
+        <form method="post">
+            <input type="text" name="flag"/>
+            <input type="hidden" name="id" value="<%=chall.id%>" />
+            <br/>
+            <button class="btn-danger" type="submit" value="Submit">Submit</button>
+        </form>
+    </div>
+    <% end %>
+<% end %>
+</div>
+

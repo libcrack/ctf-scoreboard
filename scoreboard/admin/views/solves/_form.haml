@@ -1,0 +1,31 @@
+- error = @solve.errors.key?(:title) && @solve.errors[:title].count > 0
+%fieldset.control-group{:class => error ? 'has-error' : ''}
+  =f.label :title, :class => 'control-label'
+  .controls
+    ~f.text_area :title, :class => 'form-control input-large input-with-feedback', :autofocus => true
+    %span.help-inline=error ? f.error_message_on(:title, :class => 'text-error') : pat(:example)
+- error = @solve.errors.key?(:team) && @solve.errors[:team].count > 0
+%fieldset.control-group{:class => error ? 'has-error' : ''}
+  =f.label :team, :class => 'control-label'
+  .controls
+    ~f.text_area :team, :class => 'form-control input-large input-with-feedback'
+    %span.help-inline=error ? f.error_message_on(:team, :class => 'text-error') : pat(:example)
+- error = @solve.errors.key?(:challengeid) && @solve.errors[:challengeid].count > 0
+%fieldset.control-group{:class => error ? 'has-error' : ''}
+  =f.label :challengeid, :class => 'control-label'
+  .controls
+    =f.text_field :challengeid, :class => 'form-control input-large input-with-feedback'
+    %span.help-inline=error ? f.error_message_on(:challengeid, :class => 'text-error') : pat(:example)
+- error = @solve.errors.key?(:points) && @solve.errors[:points].count > 0
+%fieldset.control-group{:class => error ? 'has-error' : ''}
+  =f.label :points, :class => 'control-label'
+  .controls
+    =f.text_field :points, :class => 'form-control input-large input-with-feedback'
+    %span.help-inline=error ? f.error_message_on(:points, :class => 'text-error') : pat(:example)
+
+.form-actions
+  =f.submit pat(:save), :class => 'btn btn-primary'
+  &nbsp;
+  =f.submit pat(:save_and_continue), :class => 'btn btn-info', :name => 'save_and_continue'
+  &nbsp;
+  =link_to pat(:cancel), url(:solves, :index), :class => 'btn btn-default'

@@ -1,0 +1,62 @@
+%ul.nav.nav-tabs
+  %li.active=link_to tag_icon(:list, pat(:list)), url(:challenges, :index)
+  %li=link_to tag_icon(:plus, pat(:new)), url(:challenges, :new)
+
+.tabs-content
+  %table#list.table.table-striped.table-hover.table-condensed
+    %thead
+      %tr
+        %th.header.list-menu
+          .dropdown
+            %a.list-menu-toggle.dropdown-toggle{:href => '#', :'data-toggle' => :dropdown}
+              =tag_icon :magic
+              %span.caret
+            %ul.list-menu.dropdown-menu{:role => :menu}
+              %li.list-menu-wrapper=link_to tag_icon(:check, pat(:select_all)), '#', :id => 'select-all', :class => 'list-menu-link'
+              %li.list-menu-wrapper.list-menu-wrapper-disabled
+                =link_to tag_icon(:'check-empty', pat(:deselect_all)), '#', :id => 'deselect-all', :class => 'list-menu-link list-menu-link-disabled'
+              %li.list-menu-divider.divider
+              %li.list-menu-wrapper.list-menu-wrapper-disabled
+                =link_to tag_icon(:trash, pat(:delete_selected)), '#', :id => 'delete-selected', :class => 'list-menu-link list-menu-link-disabled'
+                .list-menu-popover-delete-selected.popover.right
+                  .arrow
+                  %h3.popover-title=pat(:delete_selected_title)
+                  .popover-content
+                    -form_tag url(:challenges, :destroy_many), :method => :delete do
+                      =hidden_field_tag :challenge_ids, :'data-delete-many-ids' => true
+                      =submit_tag pat(:delete), :class =>'list-menu-popover-delete-selected-btn btn btn-danger btn-small'
+                      .btn.btn-default.btn-small.cancel=pat(:cancel)
+        %th.header= mat(:challenge, :id)
+        %th.header= mat(:challenge, :title)
+        %th.header= mat(:challenge, :body)
+        %th.header= mat(:challenge, :link)
+        %th.header= mat(:challenge, :category)
+        %th.header= mat(:challenge, :points)
+        %th.header= mat(:challenge, :flag)
+        %th.header= mat(:challenge, :visible)
+        %th.header.list-row-action-header
+
+    %tbody
+      -@challenges.each do |challenge|
+        %tr.list-row
+          %td.list-column.list-selectable
+            =check_box_tag 'challenge_ids[]', :value => challenge.id, :class => 'list-selectable-checkbox'
+          %td.list-column=challenge.id
+          %td.list-column=challenge.title
+          %td.list-column=challenge.body
+          %td.list-column=challenge.link
+          %td.list-column=challenge.category
+          %td.list-column=challenge.points
+          %td.list-column=challenge.flag
+          %td.list-column= challenge.visible ? tag_icon(:ok) : tag_icon(:remove)
+          %td.list-column.list-row-action
+            .list-row-action-wrapper
+              =link_to tag_icon(:edit), :href => url(:challenges, :edit, :id => challenge.id), :rel => :tooltip, :title => "#{pat(:edit)} challenge", :class => 'list-row-action-wrapper-link'
+              =link_to tag_icon(:trash), :rel => :tooltip, :title => "#{pat(:delete)} challenge", :class => 'list-row-action-delete-one list-row-action-wrapper-link'
+              .popover.list-row-action-popover-delete-one.left
+                .arrow
+                %h3.popover-title=pat(:delete, :model => "challenge")
+                .popover-content
+                  -form_tag url(:challenges, :destroy, :id => challenge.id), :method => :delete do
+                    =submit_tag pat(:delete), :class =>'list-row-action-popover-delete-one-btn btn btn-danger btn-small'
+                    .btn.btn-default.btn-small.cancel=pat(:cancel)
