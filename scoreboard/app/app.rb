@@ -11,6 +11,9 @@ module Scoreboard
         set :session_id, "lol_this_is_my_session"
         set :protect_from_csrf, false
 
+        set :server, 'thin'
+        set :bind, '0.0.0.0'
+
         ##
         # Caching support.
         #
@@ -177,6 +180,44 @@ module Scoreboard
             end
             @scoreboard = h.sort_by{|k,v| v}.reverse
             erb :scoreboard
+        end
+
+        get "/upload" do
+            acc = Account.current
+            if acc == nil
+                redirect "/login"
+            end
+            if acc.role != "admin"
+                redirect "/fail"
+            else
+                haml :upload
+            end
+        end
+
+        # Handle POST-request (Receive and save the uploaded file)
+        post "/upload" do
+            puts "writing file!!!!"
+            puts Dir.pwd
+            puts Dir.pwd
+            puts Dir.pwd
+            puts Dir.pwd
+            puts Dir.pwd
+            acc = Account.current
+            if acc == nil
+                redirect "/login"
+            end
+            if acc.role != "admin"
+                redirect "/fail"
+            end
+            File.open('public/challenges/' + params['myfile'][:filename], "wb") do |f|
+                f.write(params['myfile'][:tempfile].read)
+            end
+            puts "WOWE"
+            return "The file was successfully uploaded!"
+        end
+
+        get "/challenges/:file" do
+            send_file(File.join('public/challenges/', params[:file]))
         end
     end
 end
