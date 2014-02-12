@@ -7,7 +7,7 @@ require 'rubygems' unless defined?(Gem)
 require 'bundler/setup'
 require 'base64'
 require 'htmlentities'
-require 'thin'
+#require 'thin'
 Bundler.require(:default, PADRINO_ENV)
 
 ##

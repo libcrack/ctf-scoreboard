@@ -86,6 +86,43 @@ module Scoreboard
             erb :register
         end
 
+        post '/register' do #posts, actually register
+            if params["password"] != params["cpassword"]
+                flash[:notice] = "passwords do not match!"
+                redirect '/register'
+            end
+            test = Account.first(:email => params["email"])
+            if test != nil 
+                flash[:notice] = "email already in use"
+                redirect '/register'
+            end
+            test = Account.first(:name => params["login"])
+            if test != nil 
+                flash[:notice] = "username already in use"
+                redirect '/register'
+            end
+            u = Account.new
+            u.name = params["login"]
+            u.password = params["password"]
+            u.password_confirmation = params["password"]
+            u.email = params["email"]
+            u.role = "pleb"
+            if u.save
+                flash[:notice] = "User Created!"
+                session.clear
+                acc = Account.authenticate(params["email"], params["password"])
+                set_current_account(acc)
+                redirect '/scoreboard'
+            else
+                tmp = ""
+                u.errors.each do |e|
+                    tmp << (e.join("<br/>"))
+                end
+                flash[:notice] = tmp
+                redirect '/register'
+            end
+        end
+
         get "/login" do
             redirect "/admin/sessions/new"
         end
