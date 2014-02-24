@@ -26,6 +26,7 @@ gem 'dm-aggregates'
 gem 'dm-types'
 gem 'dm-core'
 gem 'htmlentities'
+gem 'puma'
 
 # Test requirements
 gem 'shoulda', :group => 'test'

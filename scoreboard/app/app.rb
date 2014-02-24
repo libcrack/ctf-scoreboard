@@ -11,8 +11,6 @@ module Scoreboard
         set :session_id, "lol_this_is_my_session"
         set :protect_from_csrf, false
 
-        set :server, 'thin'
-        set :bind, '0.0.0.0'
 
         ##
         # Caching support.
