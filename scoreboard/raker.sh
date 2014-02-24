@@ -1,4 +1,4 @@
 #!/bin/bash
-PADRINO_ENV=production padrino rake db:create
-PADRINO_ENV=production padrino rake db:migrate
-PADRINO_ENV=production padrino rake seed
+padrino -e production rake db:create
+padrino -e production rake db:migrate
+padrino -e production rake seed
