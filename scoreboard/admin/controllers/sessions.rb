@@ -6,6 +6,7 @@ Scoreboard::Admin.controllers :sessions do
   post :create do
     if account = Account.authenticate(params[:email], params[:password])
       set_current_account(account)
+      session["account"] = account
       if(account.role != "admin")
           redirect "/home"
       end
@@ -22,6 +23,7 @@ Scoreboard::Admin.controllers :sessions do
   end
 
   delete :destroy do
+    session["account"] = nil
     set_current_account(nil)
     redirect url(:sessions, :new)
   end

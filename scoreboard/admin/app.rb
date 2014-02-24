@@ -47,6 +47,7 @@ module Scoreboard
 
         before do
             Account.current = current_account
+            #Account.current = session["account"]
         end
 
     end

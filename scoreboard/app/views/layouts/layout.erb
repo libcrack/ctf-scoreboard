@@ -40,11 +40,11 @@ body {
                 <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Account&#9660;</a>
                 <ul class="dropdown-menu">
-                    <% if Account.current == nil %>
+                    <% if session["account"] == nil %>
                     <li><a href="/login"><i class="fa fa-globe fa-fw"></i>Login</a></li>
                     <li><a href="/register"><i class="fa fa-star fa-fw"></i>Register</a></li>
                 <% else %>
-                    <li><a href="/logout"><i class="fa fa-star fa-fw"></i>Logout (<%=HTMLEntities.new.encode(Account.current.name) %>)</a></li>
+                    <li><a href="/logout"><i class="fa fa-star fa-fw"></i>Logout (<%=HTMLEntities.new.encode(session["account"].name) %>)</a></li>
                     <% end %>
                 </ul>
                 </li>
@@ -52,6 +52,8 @@ body {
                 </li>
                 <li><a href="/challenges">Challenges</a>
                 </li>
+		<li><a href="/scoreboard">Scoreboard</a>
+		</li>
             </ul>
         </div>
         <!-- /.navbar-collapse -->

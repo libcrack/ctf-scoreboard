@@ -65,7 +65,7 @@ module Scoreboard
         #
         layout :layout
         get "/" do 
-            "hello world"
+            erb :home
         end
 
         get "/home" do
@@ -73,7 +73,7 @@ module Scoreboard
         end
 
         get "/challenges" do
-            if Account.current == nil
+            if session["account"] == nil
                 redirect "/login"
             end
             @ch = Challenge.all
@@ -126,17 +126,18 @@ module Scoreboard
         end
 
         get "/logout" do
-            Account.current = nil
+            session["account"] = nil
             redirect "/home"
         end
 
         post '/challenges' do #submit a challenge
-            if Account.current == nil
+            acc = session["account"]
+            if acc == nil
                 redirect '/login'
             end
             chid = params["id"]
             flag = params["flag"]
-            team = Account.current.name
+            team = acc.name
 
             if chid.nil? or flag.nil? #if you submitted not enough, just redirect
                 redirect '/challenges'
@@ -218,7 +219,7 @@ module Scoreboard
         end
 
         get "/upload" do
-            acc = Account.current
+            acc = session["account"]
             if acc == nil
                 redirect "/login"
             end
@@ -237,7 +238,7 @@ module Scoreboard
             puts Dir.pwd
             puts Dir.pwd
             puts Dir.pwd
-            acc = Account.current
+            acc = session["account"]
             if acc == nil
                 redirect "/login"
             end
