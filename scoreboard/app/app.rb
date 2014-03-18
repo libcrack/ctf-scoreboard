@@ -131,6 +131,12 @@ module Scoreboard
         end
 
         post '/challenges' do #submit a challenge
+	    t1 = Time.new(2014,03,02,5,0,0,"+00:00")
+	    t2 = Time.new
+            if(t2 > t1)
+               redirect "/GAME OVER"
+            end
+            
             acc = session["account"]
             if acc == nil
                 redirect '/login'
@@ -184,7 +190,7 @@ module Scoreboard
                     redirect "/fail"
                 end
             end
-            flash[:notice] = escape("wow, you suck, try to get the actual flag next time, ok? *<;-)")
+            flash[:notice] = HTMLEntities.new.encode("wow, you suck, try to get the actual flag next time, ok? *<;-)")
             redirect '/challenges'
         end
 
@@ -194,27 +200,32 @@ module Scoreboard
 
         get '/scores/:team' do
             tName = Base64.decode64(params[:team])
-            puts tName
-            puts tName
-            puts tName
-            puts tName
-            puts tName
             team = Account.first(:name => tName)
             @sol = Solve.all(:team => team.name)
             erb :teamscores
         end
 
         get '/scoreboard' do
-            u = Account.all
+            u = Account.all(:order => [:id.desc])
             s = Solve.all
             h = Hash.new()
+	    h2 = Hash.new()
             u.each do |us|
                 h[us.name] = 0
+		h2[us.name] = 0
             end
             s.each do |sc|
                 h[sc.team] += sc.points
+		if h2[sc.team] < sc.id
+			h2[sc.team] = sc.id 
+		end
             end
-            @scoreboard = h.sort_by{|k,v| v}.reverse
+            @scoreboard = h.sort do |a,b|
+		result = a[1]<=>b[1]
+		result = h2[b[0]]<=>h2[a[0]] if result == 0
+		result
+            end
+            @scoreboard = @scoreboard.reverse
             erb :scoreboard
         end
 

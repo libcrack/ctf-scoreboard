@@ -4,8 +4,11 @@
     <%=flash[:notice]%>
 </div>
 <% end %>
+<h1>HINT: the ctf is over. hope you had fun and play next year!</h1>
 <div class="row">
-    <% @ch.each do |chall| %>
+    <% @ch.reverse_each do |chall| %>
+	<% my_solve = Solve.all(:team => session["account"].name) %>
+	<% this_solve = my_solve.all(:challengeid => chall.id ) %>
         <% if chall.visible  %>
         <div class="span4">
         <h3>
@@ -24,7 +27,11 @@
             <input type="text" name="flag"/>
             <input type="hidden" name="id" value="<%=chall.id%>" />
             <br/>
-            <button class="btn-danger" type="submit" value="Submit">Submit</button>
+                <% if this_solve.count < 1 %>
+                    <button class="btn-danger" type="submit" value="Submit">Submit</button>
+                <% else %>
+                    <button class="btn-success" type="submit" value="Submit">Submit</button>
+                <% end %>
         </form>
     </div>
     <% end %>
