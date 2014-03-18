@@ -131,11 +131,11 @@ module Scoreboard
         end
 
         post '/challenges' do #submit a challenge
-	    t1 = Time.new(2014,03,02,5,0,0,"+00:00")
-	    t2 = Time.new
-            if(t2 > t1)
-               redirect "/GAME OVER"
-            end
+	    #t1 = Time.new(2014,03,02,5,0,0,"+00:00")
+	    #t2 = Time.new
+            #if(t2 > t1)
+               #redirect "/GAME OVER"
+           #end
             
             acc = session["account"]
             if acc == nil
